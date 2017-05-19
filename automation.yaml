@@ -1,0 +1,132 @@
+#######################################################
+#  AUTOMATION
+#######################################################
+- alias: Update Lockitron Status Locked
+  hide_entity: false
+  trigger:
+    platform: state
+    entity_id: sensor.front_door_lock
+    from: 'unlock'
+    to: 'lock'
+  action:
+    - service: rest_command.notify_googlehome_door_locked
+    - service: rest_command.update_lockitron_status_locked
+- alias: Update Lockitron Status Unlocked
+  hide_entity: false
+  trigger:
+    platform: state
+    entity_id: sensor.front_door_lock
+    from: 'lock'
+    to: 'unlock'
+  action:
+    - service: rest_command.notify_googlehome_door_unlocked
+    - service: rest_command.update_lockitron_status_unlocked
+- alias: Notify Google Home about Front Door
+  hide_entity: false
+  trigger:
+    platform: state
+    entity_id: sensor.front_door
+  action:
+    service: tts.google_say
+    entity_id: media_player.kitchen_home
+    data_template:
+      message: "Front door is {{states('sensor.front_door')}}"
+      cache: false
+- alias: Notify Google Home about Back Door
+  hide_entity: false
+  trigger:
+    platform: state
+    entity_id: sensor.back_door
+  action:
+    service: tts.google_say
+    entity_id: media_player.kitchen_home
+    data_template:
+      message: "Back door is {{states('sensor.back_door')}}"
+      cache: false
+- alias: Notify Google Home about Door to Garage
+  hide_entity: false
+  trigger:
+    platform: state
+    entity_id: sensor.door_to_garage
+  action:
+    service: tts.google_say
+    entity_id: media_player.kitchen_home
+    data_template:
+      message: "Door To The Garage is {{states('sensor.door_to_garage')}}"
+      cache: false
+- alias: Web Notify when garage open or closed.
+  hide_entity: false
+  trigger:
+    platform: state
+    entity_id: cover.garage_door
+  action:
+    service: notify.html5
+    data:
+      message: "Garage Door is {% if is_state('cover.garage_door', 'open') %}Open{% else %}Closed{% endif %}!" 
+- alias: "Movie paused"
+  trigger:
+    - platform: state
+      entity_id: media_player.fire_tv_stick
+      from: 'playing'
+      to: 'paused'
+  action:
+    service: scene.turn_on
+    entity_id: scene.theater_light_dim
+- alias: "Movie stopped"
+  trigger:
+    - platform: state
+      entity_id: media_player.fire_tv_stick
+      to: 'idle'
+  action:
+    service: scene.turn_on
+    entity_id: scene.theater_light_normal
+- alias: "Movie playing"
+  trigger:
+    - platform: state
+      entity_id: media_player.fire_tv_stick
+      from: 'paused'
+      to: 'playing'
+  action:
+    service: scene.turn_on
+    entity_id: scene.theater_light_off
+- alias: "Watch Movie"
+  trigger:
+    - platform: state
+      entity_id: sensor.theater_room
+      from: 'PowerOff'
+      to: 'Watch Fire TV'
+  action:
+    service: scene.turn_on
+    entity_id: scene.theater_light_off
+- alias: "Theater Room Light On"
+  trigger:
+    - platform: state
+      entity_id: sensor.theater_room_motion_sensor
+      to: 'active'
+  condition:
+    condition: state
+    entity_id: sensor.theater_room
+    state: 'PowerOff'
+  action:
+    service: light.turn_on
+    entity_id: light.mqtt_theater_room_light
+- alias: "Theater Room Light Off"
+  trigger:
+    - platform: state
+      entity_id: sensor.theater_room_motion_sensor
+      from: 'active'
+      to: 'inactive'
+    - platform: time
+      # every 5 minutes
+      minutes: /5
+      seconds: 00
+  condition:
+    - condition: state
+      entity_id: light.mqtt_theater_room_light
+      state: 'on'
+    - condition: state
+      entity_id: sensor.theater_room_motion_sensor
+      state: 'inactive'
+  action:
+    service: light.turn_off
+    entity_id: light.mqtt_theater_room_light
