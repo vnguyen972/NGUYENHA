@@ -26,3 +26,4 @@ ip_bans.yaml
 /icloud/*
 fedexdeliverymanager_cookies.pickle
 emulated_hue_ids.json
+git_push_2_remote.sh
