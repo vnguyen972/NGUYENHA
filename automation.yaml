@@ -9,8 +9,12 @@
     from: 'unlock'
     to: 'lock'
   action:
-    - service: rest_command.notify_googlehome_door_locked
     - service: rest_command.update_lockitron_status_locked
+    - service: tts.google_say
+      entity_id: media_player.kitchen_home
+      data:
+        message: "Front Door is locked"
+        cache: false    
 - alias: Update Lockitron Status Unlocked
   hide_entity: false
   trigger:
@@ -19,9 +23,13 @@
     from: 'lock'
     to: 'unlock'
   action:
-    - service: rest_command.notify_googlehome_door_unlocked
     - service: rest_command.update_lockitron_status_unlocked
-- alias: Notify Google Home about Front Door
+    - service: tts.google_say
+      entity_id: media_player.kitchen_home
+      data:
+        message: "Front Door is unlocked"
+        cache: false
+- alias: Notify GH about Front Door
   hide_entity: false
   trigger:
     platform: state
@@ -32,7 +40,7 @@
     data_template:
       message: "Front door is {{states('sensor.front_door')}}"
       cache: false
-- alias: Notify Google Home about Back Door
+- alias: Notify GH about Back Door
   hide_entity: false
   trigger:
     platform: state
@@ -43,7 +51,7 @@
     data_template:
       message: "Back door is {{states('sensor.back_door')}}"
       cache: false
-- alias: Notify Google Home about Door to Garage
+- alias: Notify GH about Door to Garage
   hide_entity: false
   trigger:
     platform: state
