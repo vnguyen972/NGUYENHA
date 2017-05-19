@@ -138,3 +138,28 @@
   action:
     service: light.turn_off
     entity_id: light.mqtt_theater_room_light
+- alias: "Trash Day Reminder"
+  trigger:
+    - platform: state
+      entity_id: sensor.until_trash_day
+      to: '1'
+    - platform: time
+      # Every Hour
+      hours: /1
+      minutes: 00
+      seconds: 00
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: light.mqtt_dinner_table_light
+        state: 'on'
+      - condition: state
+        entity_id: sensor.until_trash_day
+        state: '1'
+  action:
+    - service: tts.google_say
+      entity_id: media_player.kitchen_home
+      data:
+        message: "Trash Day is Tomorrow. Bring out the trash can!"
+        cache: false
