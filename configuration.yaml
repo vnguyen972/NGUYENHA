@@ -216,7 +216,7 @@ scene:
         state: off
         transition: 2
 
-automation: !include automation.yaml
+automation: !include automations.yaml
 light:
   - platform: mqtt
     name: "MQTT Theater Room Light"
