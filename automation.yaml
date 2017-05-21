@@ -1,7 +1,8 @@
 #######################################################
 #  AUTOMATION
 #######################################################
-- alias: Update Lockitron Status Locked
+- id: lockitron_status_locked
+  alias: Update Lockitron Status Locked
   hide_entity: false
   trigger:
     platform: state
@@ -15,7 +16,8 @@
       data:
         message: "Front Door is locked"
         cache: false    
-- alias: Update Lockitron Status Unlocked
+- id: lockitron_status_unlocked
+  alias: Update Lockitron Status Unlocked
   hide_entity: false
   trigger:
     platform: state
@@ -29,7 +31,8 @@
       data:
         message: "Front Door is unlocked"
         cache: false
-- alias: Notify GH about Front Door
+- id: notify_gh_about_front_door
+  alias: Notify GH about Front Door
   hide_entity: false
   trigger:
     platform: state
@@ -40,7 +43,8 @@
     data_template:
       message: "Front door is {{states('sensor.front_door')}}"
       cache: false
-- alias: Notify GH about Back Door
+- id: notify_gh_about_back_door
+  alias: Notify GH about Back Door
   hide_entity: false
   trigger:
     platform: state
@@ -51,7 +55,8 @@
     data_template:
       message: "Back door is {{states('sensor.back_door')}}"
       cache: false
-- alias: Notify GH about Door to Garage
+- id: notify_gh_about_door_to_garage
+  alias: Notify GH about Door to Garage
   hide_entity: false
   trigger:
     platform: state
@@ -62,7 +67,8 @@
     data_template:
       message: "Door To The Garage is {{states('sensor.door_to_garage')}}"
       cache: false
-- alias: Web Notify when garage open or closed.
+- id: web_notify_when_garage_status_changed
+  alias: Web Notify when garage open or closed.
   hide_entity: false
   trigger:
     platform: state
@@ -71,7 +77,8 @@
     service: notify.html5
     data:
       message: "Garage Door is {% if is_state('cover.garage_door', 'open') %}Open{% else %}Closed{% endif %}!" 
-- alias: "Movie paused"
+- id: movie_paused
+  alias: "Movie paused"
   trigger:
     - platform: state
       entity_id: media_player.fire_tv_stick
@@ -80,7 +87,8 @@
   action:
     service: scene.turn_on
     entity_id: scene.theater_light_dim
-- alias: "Movie stopped"
+- id: movie_stopped
+  alias: "Movie stopped"
   trigger:
     - platform: state
       entity_id: media_player.fire_tv_stick
@@ -88,7 +96,8 @@
   action:
     service: scene.turn_on
     entity_id: scene.theater_light_normal
-- alias: "Movie playing"
+- id: movie_playing
+  alias: "Movie playing"
   trigger:
     - platform: state
       entity_id: media_player.fire_tv_stick
@@ -97,7 +106,8 @@
   action:
     service: scene.turn_on
     entity_id: scene.theater_light_off
-- alias: "Watch Movie"
+- id: watch_movie
+  alias: "Watch Movie"
   trigger:
     - platform: state
       entity_id: sensor.theater_room
@@ -106,7 +116,8 @@
   action:
     service: scene.turn_on
     entity_id: scene.theater_light_off
-- alias: "Theater Room Light On"
+- id: movie_theater_room_light_on
+  alias: "Theater Room Light On"
   trigger:
     - platform: state
       entity_id: sensor.theater_room_motion_sensor
@@ -118,7 +129,8 @@
   action:
     service: light.turn_on
     entity_id: light.mqtt_theater_room_light
-- alias: "Theater Room Light Off"
+- id: theater_room_light_off
+  alias: "Theater Room Light Off"
   trigger:
     - platform: state
       entity_id: sensor.theater_room_motion_sensor
@@ -138,7 +150,8 @@
   action:
     service: light.turn_off
     entity_id: light.mqtt_theater_room_light
-- alias: "Trash Day Reminder"
+- id: trash_day_reminder
+  alias: "Trash Day Reminder"
   trigger:
     - platform: state
       entity_id: sensor.until_trash_day
