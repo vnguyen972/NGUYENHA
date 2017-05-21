@@ -67,7 +67,6 @@
   - platform: template
     sensors:
       gogogate2:
-        # Needed for Gogogate2 0: close 100: open
         value_template: 0
       gogogate4dash:
         value_template: >-
