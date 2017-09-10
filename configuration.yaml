@@ -111,11 +111,11 @@ device_tracker:
 
 media_player:
   - platform: cast
-    host: 192.168.86.30
+    host: 192.168.1.122
   - platform: cast
-    host: 192.168.86.31
+    host: 192.168.1.124
   - platform: cast
-    host: 192.168.86.32  
+    host: 192.168.1.126  
   - platform: plex
     include_non_clients: true
     show_all_controls: true
@@ -258,7 +258,7 @@ emulated_hue:
 remote:
   - platform: harmony
     name: Theater Room
-    host: 192.168.86.28
+    host: 192.168.1.196
     activity: Watch Fire TV
 ecobee:
   api_key: !secret ecobee_api_key    

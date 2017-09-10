@@ -55,18 +55,18 @@
     data_template:
       message: "Back door is {{states('sensor.back_door')}}"
       cache: false
-- id: notify_gh_about_door_to_garage
-  alias: Notify GH about Door to Garage
-  hide_entity: false
-  trigger:
-    platform: state
-    entity_id: sensor.door_to_garage
-  action:
-    service: tts.google_say
-    entity_id: media_player.kitchen_home
-    data_template:
-      message: "Door To The Garage is {{states('sensor.door_to_garage')}}"
-      cache: false
+#- id: notify_gh_about_door_to_garage
+#  alias: Notify GH about Door to Garage
+#  hide_entity: false
+#  trigger:
+#    platform: state
+#    entity_id: sensor.door_to_garage
+#  action:
+#    service: tts.google_say
+#    entity_id: media_player.kitchen_home
+#    data_template:
+#      message: "Door To The Garage is {{states('sensor.door_to_garage')}}"
+#      cache: false
 - id: web_notify_when_garage_status_changed
   alias: Web Notify when garage open or closed.
   hide_entity: false
