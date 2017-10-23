@@ -111,6 +111,12 @@ device_tracker:
 
 media_player:
   - platform: cast
+    host: 192.168.1.145
+  - platform: cast
+    host: 192.168.1.143
+  - platform: cast
+    host: 192.168.1.144
+  - platform: cast
     host: 192.168.1.122
   - platform: cast
     host: 192.168.1.124
@@ -252,9 +258,7 @@ light:
 emulated_hue:
   type: google_home
   listen_port: 80
-  exposed_domains:
-    - light
-    - switch
+
 remote:
   - platform: harmony
     name: Theater Room
@@ -281,20 +285,30 @@ lock:
   - platform: lockitron
     access_token: !secret lockitron_access_token
     id: !secret lockitron_lock_id
-camera:
-  - platform: mqtt
-    topic: zanzito/vnguyen972/picture
-    name: Vu's Phone Camera
+duckdns:
+  domain: nguyenha
+  access_token: !secret duckdns_access_token
 rest_command:
   notify_googlehome_door_locked:
     url: 'https://maker.ifttt.com/trigger/FrontDoorLockStatusChanged/with/key/bamq6_Bv89a5zqRh4XL9B?value1=Locked'
     payload: >
-      '{"entity_id":"media_player.kitchen_home","message":"Front Door is {{Value1}}"}'
+      '{"entity_id":"media_player.nguyeniverse","message":"Front Door is {{Value1}}"}'
   notify_googlehome_door_unlocked:
     url: 'https://maker.ifttt.com/trigger/FrontDoorLockStatusChanged/with/key/bamq6_Bv89a5zqRh4XL9B?value1=Unlocked'
     payload: >
-      '{"entity_id":"media_player.kitchen_home","message":"Front Door is {{Value1}}"}'
+      '{"entity_id":"media_player.nguyeniverse","message":"Front Door is {{Value1}}"}'
   update_lockitron_status_locked:
     url: 'https://apilio.herokuapp.com/boolean_variables/frontDoorLocked/set_true/with_key/c1e95158a62b73f9a197de4584a841a6'
   update_lockitron_status_unlocked:
     url: 'https://apilio.herokuapp.com/boolean_variables/frontDoorLocked/set_false/with_key/c1e95158a62b73f9a197de4584a841a6'
+google_assistant:
+  project_id: project-5901766033282729275
+  client_id: 6349238557567013A7351545817A507
+  access_token: 6432z896263A400821425988
+  exposed_domains:
+    - switch
+    - light
+    - script
+    - media_player
+    - scene
+    - automation
