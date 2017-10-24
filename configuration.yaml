@@ -255,9 +255,9 @@ light:
     payload_off: "off"
     retain: true
     optimistic: false
-emulated_hue:
-  type: google_home
-  listen_port: 80
+#emulated_hue:
+#  type: google_home
+#  listen_port: 80
 
 remote:
   - platform: harmony
@@ -307,8 +307,5 @@ google_assistant:
   access_token: 6432z896263A400821425988
   exposed_domains:
     - switch
-    - light
     - script
-    - media_player
     - scene
-    - automation
