@@ -1,6 +1,28 @@
 #######################################################
 #  AUTOMATION
-#######################################################
+#######################################################  
+- id: door_left_open
+  alias: door left open
+  hide_entity: false
+  trigger:
+    - platform: time
+      minutes: '/1'
+      seconds: 00
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: '{{ (as_timestamp(now()) -  as_timestamp(states.sensor.door_to_garage.last_updated)) > 300 }}'
+      - condition: state
+        entity_id: sensor.door_to_garage
+        state: 'open'
+  action:
+    - service: tts.google_say
+      entity_id: media_player.nguyeniverse
+      data:
+        message: "Door to the Garage has been open for over 5 minutes. Please close it!"
+        cache: false
+  
 - id: lockitron_status_locked
   alias: Update Lockitron Status Locked
   hide_entity: false
@@ -123,10 +145,10 @@
       entity_id: sensor.theater_room_motion_sensor
       from: 'inactive'
       to: 'active'
-    - platform: time
-      # # every minute
-      minutes: '/1'
-      #seconds: '/1'
+#    - platform: time
+#      # # every minute
+#      minutes: '/1'
+#      #seconds: '/1'
   condition:
     condition: and
     conditions:
@@ -149,9 +171,9 @@
       entity_id: sensor.theater_room_motion_sensor
       from: 'active'
       to: 'inactive'
-    - platform: time
-      # every minutes
-      minutes: '/1'
+#    - platform: time
+#      # every minutes
+#      minutes: '/1'
       #seconds: 00
     - platform: state
       entity_id: media_player.fire_tv_stick
