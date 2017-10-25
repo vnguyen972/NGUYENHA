@@ -15,8 +15,6 @@ homeassistant:
     hidden: no
    group.dillion:
     hidden: no
-     
-
 # Show links to resources in log and frontend
 #introduction:
 
@@ -309,3 +307,4 @@ google_assistant:
     - switch
     - script
     - scene
+    - group
