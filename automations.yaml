@@ -1,7 +1,29 @@
 #######################################################
 #  AUTOMATION
 #######################################################  
-- id: door_left_open
+- id: tom_jerry_bus_arrival_reminder
+  alias: bus_arrival
+  hide_entity: false
+  trigger:
+    - platform: time
+      hours: 8
+      minutes: /5
+      seconds: 00
+  condition:
+    condition: time
+    weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+  action:
+    - service: tts.google_say
+      entity_id: media_player.kitchen_home
+      data:
+        message: "Tommy and Jerry, school bus is coming at 8:20am. Don't be late or you'll miss it!"
+        cache: false      
+- id: door_to_garage_left_open
   alias: door left open
   hide_entity: false
   trigger:
@@ -20,7 +42,7 @@
     - service: tts.google_say
       entity_id: media_player.nguyeniverse
       data:
-        message: "Door to the Garage has been open for over 5 minutes. Please close it!"
+        message: "Door to the Garage has been opened for over 5 minutes. Please close it!"
         cache: false
   
 - id: lockitron_status_locked
@@ -34,7 +56,7 @@
   action:
     - service: rest_command.update_lockitron_status_locked
     - service: tts.google_say
-      entity_id: media_player.nguyeniverse
+      entity_id: media_player.kitchen_home
       data:
         message: "Front Door is locked"
         cache: false    
@@ -49,7 +71,7 @@
   action:
     - service: rest_command.update_lockitron_status_unlocked
     - service: tts.google_say
-      entity_id: media_player.nguyeniverse
+      entity_id: media_player.kitchen_home
       data:
         message: "Front Door is unlocked"
         cache: false
@@ -60,11 +82,19 @@
     platform: state
     entity_id: sensor.front_door
   action:
-    service: tts.google_say
-    entity_id: media_player.nguyeniverse
-    data_template:
-      message: "Front door is {{states('sensor.front_door')}}"
-      cache: false
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: media_player.kitchen_home
+          state: 'off'
+        - condition: state
+          entity_id: media_player.kitchen_home
+          state: 'idle'
+    - service: tts.google_say
+      entity_id: media_player.kitchen_home
+      data_template:
+        message: "Front door is {{states('sensor.front_door')}}"
+        cache: false
 - id: notify_gh_about_back_door
   alias: Notify GH about Back Door
   hide_entity: false
@@ -72,11 +102,19 @@
     platform: state
     entity_id: sensor.back_door
   action:
-    service: tts.google_say
-    entity_id: media_player.nguyeniverse
-    data_template:
-      message: "Back door is {{states('sensor.back_door')}}"
-      cache: false
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: media_player.kitchen_home
+          state: 'off'
+        - condition: state
+          entity_id: media_player.kitchen_home
+          state: 'idle'
+    - service: tts.google_say
+      entity_id: media_player.kitchen_home
+      data_template:
+        message: "Back door is {{states('sensor.back_door')}}"
+        cache: false
 #- id: notify_gh_about_door_to_garage
 #  alias: Notify GH about Door to Garage
 #  hide_entity: false
