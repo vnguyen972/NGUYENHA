@@ -1,6 +1,32 @@
 #######################################################
 #  AUTOMATION
-#######################################################  
+####################################################### 
+- id: Notification Audio - Welcome home Dustin
+  trigger:
+    - platform: state
+      entity_id: device_tracker.dustin972_dustinGalaxy7
+      from: 'not_home'
+      to: 'home'
+  action:
+    - delay: '00:00:30'
+    - service: tts.google_say
+      entity_id: media_player.kitchen_home
+      data:
+        message: "Welcome home Dustin!"
+        cache: false        
+- id: Notification Audio - Dustin arrived at school
+  trigger:
+    - platform: state
+      entity_id: device_tracker.dustin972_dustinGalaxy7
+      from: 'not_home'
+      to: 'Wylie-High'
+  action:
+    - delay: '00:00:30'
+    - service: tts.google_say
+      entity_id: media_player.kitchen_home
+      data:
+        message: "Dustin has arrived at school."
+        cache: false
 - id: tom_jerry_bus_arrival_reminder
   alias: bus_arrival
   hide_entity: false

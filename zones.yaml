@@ -1,6 +1,10 @@
 #######################################
 # ZONES
 #######################################
+- name: Wylie-High
+  latitude: !secret wyliehigh_latitude
+  longitude: !secret wyliehigh_longitude
+  radius: 300
 - name: Home
   latitude: !secret home_latitude
   longitude: !secret home_longitude
