@@ -1,6 +1,6 @@
-#######################################################
+########################################################
 #  AUTOMATION
-####################################################### 
+########################################################
 - id: Notification Audio - Welcome home Dustin
   trigger:
     - platform: state
@@ -14,18 +14,22 @@
       data:
         message: "Welcome home Dustin!"
         cache: false        
-- id: Notification Audio - Dustin arrived at school
+- id: Notification Audio - Duyen arrived at work
   trigger:
     - platform: state
-      entity_id: device_tracker.dustin972_dustinGalaxy7
+      entity_id: device_tracker.duyen972_duyengalaxys7
       from: 'not_home'
-      to: 'Wylie-High'
+      to: 'SV-E'
+  condition:
+    - condition: time
+      before: '08:30'
+      after: '08:15'
   action:
     - delay: '00:00:30'
     - service: tts.google_say
       entity_id: media_player.kitchen_home
       data:
-        message: "Dustin has arrived at school."
+        message: "Duyen has arrived at work."
         cache: false
 - id: tom_jerry_bus_arrival_reminder
   alias: bus_arrival
@@ -36,13 +40,16 @@
       minutes: /5
       seconds: 00
   condition:
-    condition: time
-    weekday:
-      - mon
-      - tue
-      - wed
-      - thu
-      - fri
+    - condition: time
+      before: '08:15'
+      after: '08:00'
+    - condition: time
+      weekday:
+        - mon
+        - tue
+        - wed
+        - thu
+        - fri
   action:
     - service: tts.google_say
       entity_id: media_player.kitchen_home
