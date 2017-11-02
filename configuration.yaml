@@ -286,19 +286,19 @@ lock:
 duckdns:
   domain: nguyenha
   access_token: !secret duckdns_access_token
-rest_command:
-  notify_googlehome_door_locked:
-    url: 'https://maker.ifttt.com/trigger/FrontDoorLockStatusChanged/with/key/bamq6_Bv89a5zqRh4XL9B?value1=Locked'
+#rest_command:
+#  notify_googlehome_door_locked:
+#   url: 'https://maker.ifttt.com/trigger/FrontDoorLockStatusChanged/with/key/bamq6_Bv89a5zqRh4XL9B?value1=Locked'
 #    payload: >
 #      '{"entity_id":"media_player.nguyeniverse","message":"Front Door is {{Value1}}"}'
-  notify_googlehome_door_unlocked:
-    url: 'https://maker.ifttt.com/trigger/FrontDoorLockStatusChanged/with/key/bamq6_Bv89a5zqRh4XL9B?value1=Unlocked'
- #   payload: >
- #     '{"entity_id":"media_player.nguyeniverse","message":"Front Door is {{Value1}}"}'
-  update_lockitron_status_locked:
-    url: 'https://apilio.herokuapp.com/boolean_variables/frontDoorLocked/set_true/with_key/c1e95158a62b73f9a197de4584a841a6'
-  update_lockitron_status_unlocked:
-    url: 'https://apilio.herokuapp.com/boolean_variables/frontDoorLocked/set_false/with_key/c1e95158a62b73f9a197de4584a841a6'
+#  notify_googlehome_door_unlocked:
+#    url: 'https://maker.ifttt.com/trigger/FrontDoorLockStatusChanged/with/key/bamq6_Bv89a5zqRh4XL9B?value1=Unlocked'
+#   payload: >
+#     '{"entity_id":"media_player.nguyeniverse","message":"Front Door is {{Value1}}"}'
+#  update_lockitron_status_locked:
+#    url: 'https://apilio.herokuapp.com/boolean_variables/frontDoorLocked/set_true/with_key/c1e95158a62b73f9a197de4584a841a6'
+#  update_lockitron_status_unlocked:
+#    url: 'https://apilio.herokuapp.com/boolean_variables/frontDoorLocked/set_false/with_key/c1e95158a62b73f9a197de4584a841a6'
 google_assistant:
   project_id: project-5901766033282729275
   client_id: 6349238557567013A7351545817A507

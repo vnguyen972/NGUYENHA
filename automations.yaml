@@ -1,7 +1,30 @@
 ########################################################
 #  AUTOMATION
 ########################################################
-- id: Notification Audio - Welcome home Dustin
+- id: Lockitron Notification
+  alias: lockitron_notification
+  trigger:
+    - platform: time
+      minutes: '/5'
+      seconds: 00
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: '{{ (as_timestamp(now()) -  as_timestamp(states.sensor.front_door.last_updated)) > 300 }}'
+      - condition: state
+        entity_id: lock.lockitron
+        state: 'unlocked'
+      - condition: state
+        entity_id: sensor.front_door
+        state: 'closed'
+  action:
+    - service: tts.google_say
+      entity_id: media_player.kitchen_home
+      data:
+        message: "Front door is closed over 5 minutes but it's not locked. Please lock it now!"
+- id: Notification_Audio-Welcome_home_Dustin
+  alias: welcome_home_dustin
   trigger:
     - platform: state
       entity_id: device_tracker.dustin972_dustinGalaxy7
@@ -14,7 +37,8 @@
       data:
         message: "Welcome home Dustin!"
         cache: false        
-- id: Notification Audio - Duyen arrived at work
+- id: Notification_Audio-Duyen_arrived_at_work
+  alias: duyen_arrived_at_work
   trigger:
     - platform: state
       entity_id: device_tracker.duyen972_duyengalaxys7
@@ -78,36 +102,36 @@
         message: "Door to the Garage has been opened for over 5 minutes. Please close it!"
         cache: false
   
-- id: lockitron_status_locked
-  alias: Update Lockitron Status Locked
-  hide_entity: false
-  trigger:
-    platform: state
-    entity_id: sensor.front_door_lock
-    from: 'unlock'
-    to: 'lock'
-  action:
-    - service: rest_command.update_lockitron_status_locked
-    - service: tts.google_say
-      entity_id: media_player.kitchen_home
-      data:
-        message: "Front Door is locked"
-        cache: false    
-- id: lockitron_status_unlocked
-  alias: Update Lockitron Status Unlocked
-  hide_entity: false
-  trigger:
-    platform: state
-    entity_id: sensor.front_door_lock
-    from: 'lock'
-    to: 'unlock'
-  action:
-    - service: rest_command.update_lockitron_status_unlocked
-    - service: tts.google_say
-      entity_id: media_player.kitchen_home
-      data:
-        message: "Front Door is unlocked"
-        cache: false
+#- id: lockitron_status_locked
+#  alias: Update Lockitron Status Locked
+#  hide_entity: false
+#  trigger:
+#    platform: state
+#    entity_id: sensor.front_door_lock
+#    from: 'unlock'
+#    to: 'lock'
+#  action:
+#    - service: rest_command.update_lockitron_status_locked
+#    - service: tts.google_say
+#      entity_id: media_player.kitchen_home
+#      data:
+#        message: "Front Door is locked"
+#        cache: false    
+#- id: lockitron_status_unlocked
+#  alias: Update Lockitron Status Unlocked
+#  hide_entity: false
+#  trigger:
+#    platform: state
+#    entity_id: sensor.front_door_lock
+#    from: 'lock'
+#    to: 'unlock'
+#  action:
+#    - service: rest_command.update_lockitron_status_unlocked
+#    - service: tts.google_say
+#      entity_id: media_player.kitchen_home
+#      data:
+#        message: "Front Door is unlocked"
+#        cache: false
 - id: notify_gh_about_front_door
   alias: Notify GH about Front Door
   hide_entity: false

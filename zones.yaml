@@ -4,7 +4,7 @@
 - name: Wylie-High
   latitude: !secret wyliehigh_latitude
   longitude: !secret wyliehigh_longitude
-  radius: 300
+  radius: 800
 - name: Home
   latitude: !secret home_latitude
   longitude: !secret home_longitude
@@ -24,7 +24,7 @@
 - name: Cooper
   latitude: !secret cooper_latitude
   longitude: !secret cooper_longitude
-  radius: 250
+  radius: 550
 - name: Ba-Noi
   latitude: !secret banoi_latitude
   longitude: !secret banoi_longitude
