@@ -97,7 +97,7 @@
         state: 'open'
   action:
     - service: tts.google_say
-      entity_id: media_player.nguyeniverse
+      entity_id: media_player.kitchen_home
       data:
         message: "Door to the Garage has been opened for over 5 minutes. Please close it!"
         cache: false
@@ -240,10 +240,6 @@
       entity_id: sensor.theater_room_motion_sensor
       from: 'inactive'
       to: 'active'
-#    - platform: time
-#      # # every minute
-#      minutes: '/1'
-#      #seconds: '/1'
   condition:
     condition: and
     conditions:
@@ -266,10 +262,6 @@
       entity_id: sensor.theater_room_motion_sensor
       from: 'active'
       to: 'inactive'
-#    - platform: time
-#      # every minutes
-#      minutes: '/1'
-      #seconds: 00
     - platform: state
       entity_id: media_player.fire_tv_stick
       from: 'paused'
@@ -313,7 +305,7 @@
         state: '1'
   action:
     - service: tts.google_say
-      entity_id: media_player.nguyeniverse
+      entity_id: media_player.kitchen_home
       data:
         message: "Trash Day is Tomorrow. Bring out the trash can!"
         cache: false

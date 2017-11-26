@@ -64,6 +64,9 @@ ifttt:
   key: !secret ifttt_api_key
 
 notify:
+  - platform: telegram
+    name: Vu_Telegram
+    chat_id: 467266232
   - platform: html5
     name: html5
     gcm_api_key: !secret notify_html5_gcm_api_key
@@ -109,17 +112,17 @@ device_tracker:
 
 media_player:
   - platform: cast
-    host: 192.168.1.145
+    host: 192.168.1.103
   - platform: cast
-    host: 192.168.1.143
+    host: 192.168.1.102
   - platform: cast
-    host: 192.168.1.144
+    host: 192.168.1.152
   - platform: cast
-    host: 192.168.1.122
+    host: 192.168.1.150
   - platform: cast
-    host: 192.168.1.124
+    host: 192.168.1.156
   - platform: cast
-    host: 192.168.1.126  
+    host: 192.168.1.151  
   - platform: plex
     include_non_clients: true
     show_all_controls: true
@@ -308,3 +311,8 @@ google_assistant:
     - script
     - scene
     - group
+telegram_bot:
+  - platform: polling
+    api_key: !secret telegram_api_key
+    allowed_chat_ids:
+      - 467266232
