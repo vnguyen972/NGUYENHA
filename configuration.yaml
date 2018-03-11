@@ -100,13 +100,22 @@ mqtt:
     retain: true
 
 device_tracker:
+- platform: linksys_ap
+  host: 192.168.1.1
+  username: admin
+  password: !secret linksys_ap_pw
+  consider_home: 180
+  interval_seconds: 10
+  track_new_devices: yes
 - platform: nmap_tracker
-  hosts: 192.168.1.179-183
+  hosts: 
+    - 192.168.1.113
+    - 192.168.1.112
+    - 192.168.1.115
+    - 192.168.1.191
   home_interval: 1
   consider_home: 180
   scan_options: " --privileged -sP "
-  exclude:
-   - 192.168.1.180
 - platform: owntracks
   max_gps_accuracy: 200
 
@@ -122,10 +131,15 @@ media_player:
   - platform: cast
     host: 192.168.1.156
   - platform: cast
-    host: 192.168.1.151  
+    host: 192.168.1.151
+  - platform: cast
+    host: 192.168.1.145
+  - platform: cast
+    host: 192.168.1.116  
   - platform: plex
     include_non_clients: true
     show_all_controls: true
+  - platform: roku
 
 group:
   Kitchen:
