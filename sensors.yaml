@@ -2,6 +2,10 @@
 ## Sensors
 #################################################################
   - platform: yr
+  - platform: spotcrime
+    name: "Crime Watch"
+    radius: 10
+    days: 5
   - platform: mqtt
     name: "Laundry R. Sensor Battery Level"
     state_topic: "smartthings/Door To Garage/battery"

@@ -289,7 +289,7 @@ binary_sensor:
 switch:
   - platform: template
     switches:
-      firetv:
+      theater:
         value_template: "{% if is_state('remote.theater_room', 'on') %}on{% else %}off{% endif %}"
         turn_on:
           service: remote.turn_on
