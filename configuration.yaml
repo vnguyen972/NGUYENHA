@@ -140,6 +140,7 @@ media_player:
     include_non_clients: true
     show_all_controls: true
   - platform: roku
+    host: 192.168.1.124
 
 group:
   Kitchen:
