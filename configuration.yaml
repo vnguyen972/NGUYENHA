@@ -159,7 +159,6 @@ group:
   Theater:
     view: yes
     entities:
-      - media_player.fire_tv_stick
       - light.mqtt_theater_room_light
       - sensor.theater_room_motion_sensor
   Garage Door:
@@ -223,7 +222,11 @@ input_select:
      - Sat
      - Sun
     initial: Wed
-      
+  vacation:
+    options:
+     - Yes
+     - No
+    initial: No      
 scene:
   - name: theater light normal
     entities:
@@ -271,6 +274,15 @@ light:
     payload_off: "off"
     retain: true
     optimistic: false
+  - platform: mqtt
+    name: "MQTT Hallway to Garage Light"
+    state_topic: "smartthings/Hallway To Garage/switch"
+    command_topic: "smartthings/Hallway To Garage/switch"
+    qos: 0
+    payload_on: "on"
+    payload_off: "off"
+    retain: true
+    optimistic: false
 #emulated_hue:
 #  type: google_home
 #  listen_port: 80
@@ -284,8 +296,22 @@ ecobee:
   api_key: !secret ecobee_api_key    
 binary_sensor:
   - platform: workday
+    name: Work Days
     country: US
     state: TX
+    workdays: [mon, tue, wed, thu, fri]
+  - platform: workday
+    name: Holidays
+    country: US
+    state: TX
+    workdays: [holiday]
+    excludes: []
+  - platform: workday
+    name: Weekends
+    country: US
+    state: TX
+    workdays: [sat, sun]
+    excludes: [mon, tue, wed, thu, fri, holiday]
 switch:
   - platform: template
     switches:
@@ -321,11 +347,23 @@ google_assistant:
   project_id: project-5901766033282729275
   client_id: 6349238557567013A7351545817A507
   access_token: 6432z896263A400821425988
-  exposed_domains:
-    - switch
-    - script
-    - scene
-    - group
+  expose_by_default: false
+  entity_config:
+    cover.garage_door:
+      expose: true
+      aliases:
+        - Garage Door
+#  exposed_domains:
+#    - switch
+#    - script
+#    - scene
+#    - group
+#    - input boolean
+#    - fan
+#    - light
+#    - cover
+#    - media_player
+#    - climate
 telegram_bot:
   - platform: polling
     api_key: !secret telegram_api_key

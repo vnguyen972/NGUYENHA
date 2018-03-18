@@ -55,31 +55,31 @@
       data:
         message: "Duyen has arrived at work."
         cache: false
-- id: tom_jerry_bus_arrival_reminder
-  alias: bus_arrival
-  hide_entity: false
-  trigger:
-    - platform: time
-      hours: 8
-      minutes: /5
-      seconds: 00
-  condition:
-    - condition: time
-      before: '08:15'
-      after: '08:00'
-    - condition: time
-      weekday:
-        - mon
-        - tue
-        - wed
-        - thu
-        - fri
-  action:
-    - service: tts.google_say
-      entity_id: media_player.kitchen_home
-      data:
-        message: "Tommy and Jerry, school bus is coming at 8:20am. Don't be late or you'll miss it!"
-        cache: false      
+#- id: tom_jerry_bus_arrival_reminder
+#  alias: bus_arrival
+#  hide_entity: false
+#  trigger:
+#    - platform: time
+#      hours: 8
+#      minutes: /5
+#      seconds: 00
+#  condition:
+#    - condition: time
+#      before: '08:15'
+#      after: '08:00'
+#    - condition: time
+#      weekday:
+#        - mon
+#        - tue
+#        - wed
+#        - thu
+#        - fri
+#  action:
+#    - service: tts.google_say
+#      entity_id: media_player.kitchen_home
+#      data:
+#        message: "Tommy and Jerry, school bus is coming at 8:20am. Don't be late or you'll miss it!"
+#        cache: false      
 - id: door_to_garage_left_open
   alias: door left open
   hide_entity: false
@@ -233,6 +233,26 @@
   action:
     service: scene.turn_on
     entity_id: scene.theater_light_off
+- id: Hallway_To_Garage_Light_On
+  alias: "Hallway to Garage Light On"
+  trigger:
+    - platform: state
+      entity_id: sensor.hallwaydownstair_motion_sensor
+      from: 'inactive'
+      to: 'active'
+  action:
+    service: light.turn_on
+    entity_id: light.mqtt_hallway_to_garage_light
+- id: Hallway_To_Garage_Light_Off
+  alias: "Hallway to Garage Light Off"
+  trigger:
+    - platform: state
+      entity_id: sensor.hallwaydownstair_motion_sensor
+      from: 'active'
+      to: 'inactive'
+  action:
+    service: light.turn_off
+    entity_id: light.mqtt_hallway_to_garage_light
 - id: movie_theater_room_light_on
   alias: "Theater Room Light On"
   trigger:
@@ -249,9 +269,39 @@
       - condition: state
         entity_id: sensor.theater_room
         state: 'PowerOff'
-      - condition: time
-        after: '01:00:00'
-        before: '08:00:00'
+      - condition: or
+        conditions:
+          - condition: time
+            after: '08:00:00'
+            before: '22:00:00'
+            weekday:
+              - mon
+              - tue
+              - wed
+              - thu
+              - fri
+          - condition: and
+            conditions:
+              - condition: state
+                entity_id: input_select.vacation
+                state: 'True'
+              - condition: time
+                after: '12:00:00'
+                before: '02:00:00'
+                weekday:
+                  - mon
+                  - tue
+                  - wed
+                  - thu
+                  - fri
+                  - sat
+                  - sun
+          - condition: time
+            after: '12:00:00'
+            before: '02:00:00'
+            weekday:
+              - sat
+              - sun
   action:
     service: scene.turn_on
     entity_id: scene.theater_light_normal

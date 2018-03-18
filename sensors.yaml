@@ -2,6 +2,10 @@
 ## Sensors
 #################################################################
   - platform: yr
+#  - platform: isholiday
+#    name: free.tomorrow
+#    country: "US"
+#    days_ahead: 1
   - platform: spotcrime
     name: "Crime Watch"
     radius: 10
@@ -66,6 +70,11 @@
   - platform: mqtt
     name: "Theater Room Motion Sensor"
     state_topic: "smartthings/Theater Room Motion Sensor/motion"
+    payload_on: "active"
+    payload_off: "inactive"
+  - platform: mqtt
+    name: "HallwayDownStair Motion Sensor"
+    state_topic: "smartthings/HallwayDownStair/motion"
     payload_on: "active"
     payload_off: "inactive"
   - platform: template
