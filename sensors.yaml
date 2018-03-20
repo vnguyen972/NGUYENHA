@@ -2,10 +2,11 @@
 ## Sensors
 #################################################################
   - platform: yr
-#  - platform: isholiday
-#    name: free.tomorrow
-#    country: "US"
-#    days_ahead: 1
+  - platform: google_geocode
+    name: Dustin
+    origin: device_tracker.dustin972_dustingalaxy7
+    options: formatted_address
+    api_key: !secret google_geocode_api_key
   - platform: spotcrime
     name: "Crime Watch"
     radius: 10
