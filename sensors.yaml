@@ -7,6 +7,21 @@
     origin: device_tracker.dustin972_dustingalaxy7
     options: formatted_address
     api_key: !secret google_geocode_api_key
+  - platform: google_geocode
+    name: Dillion
+    origin: device_tracker.dillion972_hungsamsung
+    options: formatted_address
+    api_key: !secret google_geocode_api_key
+  - platform: google_geocode
+    name: Duyen
+    origin: device_tracker.duyen972_duyengalaxys7
+    options: formatted_address
+    api_key: !secret google_geocode_api_key
+  - platform: google_geocode
+    name: Vu
+    origin: device_tracker.vnguyen972_vugalaxy7
+    options: formatted_address
+    api_key: !secret google_geocode_api_key
   - platform: spotcrime
     name: "Crime Watch"
     radius: 10

@@ -177,6 +177,9 @@ group:
   Location:
     entities:
       - sensor.dustin
+      - sensor.dillion
+      - sensor.duyen
+      - sensor.vu
   Dark Sky Weather:
     entities:
       - sensor.dark_sky_apparent_temperature
