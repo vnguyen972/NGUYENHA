@@ -234,6 +234,11 @@ input_select:
      - Yes
      - No
     initial: No      
+  naptime:
+    options:
+     - Yes
+     - No
+    initial: No      
 scene:
   - name: theater light normal
     entities:
@@ -298,7 +303,7 @@ remote:
   - platform: harmony
     name: Theater Room
     host: 192.168.1.196
-    activity: Watch Fire TV
+    activity: Watch movie
 ecobee:
   api_key: !secret ecobee_api_key    
 binary_sensor:
@@ -354,13 +359,23 @@ google_assistant:
   project_id: project-5901766033282729275
   client_id: 6349238557567013A7351545817A507
   access_token: 6432z896263A400821425988
+  api_key: !secret google_api_key
+  agent_user_id: vnguyen972@gmail.com
   expose_by_default: false
   entity_config:
     cover.garage_door:
       expose: true
       aliases:
         - Garage Door
-#  exposed_domains:
+    script.movie_time:
+      expose: true
+      aliases:
+        - Movie Time
+    script.movie_done:
+      expose: true
+      aliases:
+        - Done Watching Movie
+  exposed_domains:
 #    - switch
 #    - script
 #    - scene
@@ -376,3 +391,26 @@ telegram_bot:
     api_key: !secret telegram_api_key
     allowed_chat_ids:
       - 467266232
+script:
+  movie_time:
+    alias: Movie Time
+    sequence:
+      - alias: Start Theater
+        service: remote.turn_on
+        data:
+          entity_id: remote.theater_room
+      - alias: Turn off Light
+        service: light.turn_off
+        data:
+          entity_id: light.mqtt_theater_room_light      
+  movie_done:
+    alias: Done Watching Movie
+    sequence:
+      - alias: Stop Theater
+        service: remote.turn_off
+        data:
+          entity_id: remote.theater_room
+      - alias: Turn on Light
+        service: light.turn_on
+        data:
+          entity_id: light.mqtt_theater_room_light          
