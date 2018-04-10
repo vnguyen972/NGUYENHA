@@ -2,6 +2,9 @@
 ## Sensors
 #################################################################
   - platform: yr
+  - platform: syncthru
+    resource: http://192.168.1.178
+    name: My Samsung Printer
   - platform: google_geocode
     name: Dustin
     origin: device_tracker.dustin972_dustingalaxy7
@@ -22,10 +25,10 @@
     origin: device_tracker.vnguyen972_vugalaxy7
     options: formatted_address
     api_key: !secret google_api_key
-  - platform: spotcrime
-    name: "Crime Watch"
-    radius: 10
-    days: 5
+  # - platform: spotcrime
+    # name: "Crime Watch"
+    # radius: 10
+    # days: 5
   - platform: mqtt
     name: "Laundry R. Sensor Battery Level"
     state_topic: "smartthings/Door To Garage/battery"

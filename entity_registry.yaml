@@ -58,3 +58,7 @@ media_player.master_bedroom_gh:
   name:
   platform: cast
   unique_id: 362370e8-47f1-7f1a-ddd9-57d8e0bfb8bd
+media_player.quadcorer16:
+  name:
+  platform: plex
+  unique_id: 979832ba26fe0bc8-com-plexapp-android

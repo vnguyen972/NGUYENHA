@@ -33,6 +33,9 @@ http:
  api_password: !secret http_password
  ssl_certificate: '/etc/letsencrypt/live/nguyenha.duckdns.org/fullchain.pem'
  ssl_key: '/etc/letsencrypt/live/nguyenha.duckdns.org/privkey.pem'
+ cors_allowed_origins:
+   - https://reformedreality.com
+   - http://reformedreality.com
 
 # Checks for available updates
 updater:
@@ -46,6 +49,9 @@ conversation:
 
 # Enables support for tracking state changes over time.
 history:
+
+recorder:
+  purge_keep_days: 5
 
 # View all events in a logbook
 logbook:
@@ -217,7 +223,10 @@ cover:
       command_open: curl --silent -X GET https://maker.ifttt.com/trigger/OpenMyGarage/with/key/bamq6_Bv89a5zqRh4XL9B?value1=Opened
       command_close: curl --silent -X GET https://maker.ifttt.com/trigger/CloseMyGarage/with/key/bamq6_Bv89a5zqRh4XL9B?value1=Opened
       command_state: /home/pi/hass.shell.commands/garage/checkG2Sensor.sh
-
+input_boolean:
+  nap_time:
+    name: Nap Time
+    initial: off
 input_select:
   trash_day:
     options:
@@ -234,11 +243,11 @@ input_select:
      - Yes
      - No
     initial: No      
-  naptime:
+  living_room_light_automation:
     options:
      - Yes
-     - No
-    initial: No      
+     - No     
+    initial: No
 scene:
   - name: theater light normal
     entities:
@@ -260,6 +269,11 @@ scene:
 
 automation: !include automations.yaml
 light:
+  - platform: group
+    name: Living Room Lights
+    entities:
+      - light.mqtt_livingroom_light_1
+      - light.mqtt_livingroom_light_2
   - platform: mqtt
     name: "MQTT Theater Room Light"
     state_topic: "smartthings/Theater Room Dimmer/switch"
@@ -290,6 +304,24 @@ light:
     name: "MQTT Hallway to Garage Light"
     state_topic: "smartthings/Hallway To Garage/switch"
     command_topic: "smartthings/Hallway To Garage/switch"
+    qos: 0
+    payload_on: "on"
+    payload_off: "off"
+    retain: true
+    optimistic: false
+  - platform: mqtt
+    name: "MQTT Livingroom Light 1"
+    state_topic: "smartthings/Livingroom Light 1/switch"
+    command_topic: "smartthings/Livingroom Light 1/switch"
+    qos: 0
+    payload_on: "on"
+    payload_off: "off"
+    retain: true
+    optimistic: false
+  - platform: mqtt
+    name: "MQTT Livingroom Light 2"
+    state_topic: "smartthings/Livingroom Light 2/switch"
+    command_topic: "smartthings/Livingroom Light 2/switch"
     qos: 0
     payload_on: "on"
     payload_off: "off"
@@ -375,6 +407,14 @@ google_assistant:
       expose: true
       aliases:
         - Done Watching Movie
+    input_boolean.nap_time:
+      expose: true
+      aliases:
+        - Nap Time
+    light.living_room_lights:
+      expose: true
+      aliases:
+        - Living Room Lights
   exposed_domains:
 #    - switch
 #    - script
@@ -413,4 +453,4 @@ script:
       - alias: Turn on Light
         service: light.turn_on
         data:
-          entity_id: light.mqtt_theater_room_light          
+          entity_id: light.mqtt_theater_room_light                    
