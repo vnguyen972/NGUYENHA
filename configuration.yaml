@@ -21,6 +21,8 @@ homeassistant:
 # Enables the frontend
 frontend:
 
+cloud:
+
 # New config panel
 config:
 
@@ -168,11 +170,11 @@ group:
     entities:
       - light.mqtt_theater_room_light
       - sensor.theater_room_motion_sensor
-  Garage Door:
-    view: yes
-    entities:
-      - sensor.gogogate2sensor
-      - cover.garage_door
+  # Garage Door:
+    # view: yes
+    # entities:
+      # - sensor.gogogate2sensor
+      # - cover.main_garage
   Family:
     view: yes
     entities:
@@ -217,15 +219,25 @@ group:
 zone: !include zones.yaml
 
 cover:
-  platform: command_line
-  covers:
-    garage_door:
-      command_open: curl --silent -X GET https://maker.ifttt.com/trigger/OpenMyGarage/with/key/bamq6_Bv89a5zqRh4XL9B?value1=Opened
-      command_close: curl --silent -X GET https://maker.ifttt.com/trigger/CloseMyGarage/with/key/bamq6_Bv89a5zqRh4XL9B?value1=Opened
-      command_state: /home/pi/hass.shell.commands/garage/checkG2Sensor.sh
+  - platform: gogogate2
+    username: admin
+    password: adm1n
+    ip_address: 192.168.1.127
+  # - platform: command_line
+    # covers:
+      # garage_door:
+        # command_open: curl --silent -X GET https://maker.ifttt.com/trigger/OpenMyGarage/with/key/bamq6_Bv89a5zqRh4XL9B?value1=Opened
+        # command_close: curl --silent -X GET https://maker.ifttt.com/trigger/CloseMyGarage/with/key/bamq6_Bv89a5zqRh4XL9B?value1=Opened
+        # command_state: /home/pi/hass.shell.commands/garage/checkG2Sensor.sh
 input_boolean:
   nap_time:
     name: Nap Time
+    initial: off
+  living_room_light_automation:
+    name: Living Room Light Automation
+    initial: on
+  vacation_time_mode:
+    name: Vacation Time Mode
     initial: off
 input_select:
   trash_day:
@@ -238,16 +250,16 @@ input_select:
      - Sat
      - Sun
     initial: Wed
-  vacation:
-    options:
-     - Yes
-     - No
-    initial: No      
-  living_room_light_automation:
-    options:
-     - Yes
-     - No     
-    initial: No
+  # vacation:
+    # options:
+     # - Yes
+     # - No
+    # initial: No      
+  # living_room_light_automation:
+    # options:
+     # - Yes
+     # - No     
+    # initial: No
 scene:
   - name: theater light normal
     entities:
@@ -411,6 +423,14 @@ google_assistant:
       expose: true
       aliases:
         - Nap Time
+    input_boolean.living_room_light_automation:
+      expose: true
+      aliases:
+        - LivingRoom Light Automation
+    input_boolean.vacation_time_mode:
+      expose: true
+      aliases:
+        - Vacation Time Mode
     light.living_room_lights:
       expose: true
       aliases:

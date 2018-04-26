@@ -62,3 +62,7 @@ media_player.quadcorer16:
   name:
   platform: plex
   unique_id: 979832ba26fe0bc8-com-plexapp-android
+media_player.all_devices:
+  name:
+  platform: cast
+  unique_id: f538a69b-a259-4eac-8f78-960261a819d7

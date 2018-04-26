@@ -98,15 +98,15 @@
     payload_off: "inactive"
   - platform: template
     sensors:
-      gogogate4dash:
-        value_template: >-
-            {%- if is_state('sensor.gogogate2', '0') -%}
-            CLOSED
-            {%- elif is_state('sensor.gogogate2', '100') -%}
-            OPEN
-            {%- else -%}
-            CLOSED
-            {%- endif -%}            
+      # gogogate4dash:
+        # value_template: >-
+            # {%- if is_state('sensor.gogogate2', '0') -%}
+            # CLOSED
+            # {%- elif is_state('sensor.gogogate2', '100') -%}
+            # OPEN
+            # {%- else -%}
+            # CLOSED
+            # {%- endif -%}            
       trash_day_number:
         value_template: >
             {% if is_state("input_select.trash_day","Sun") %}
